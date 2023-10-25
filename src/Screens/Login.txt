@@ -1,0 +1,64 @@
+import React from "react";
+// import HeaderLogin from "../Components/HeaderLogin";
+import { BG_URL, LOGO_URL } from "../Utils/constants";
+// import BodyLogin from "../Components/BodyLogin";
+
+const Login = () => {
+  return (
+    <div className="relative h-screen ">
+      <div
+        className="h-screen brightness-50"
+        style={{ backgroundImage: BG_URL }}
+      />
+      {/* <HeaderLogin /> */}
+      <div className="absolute z-40 w-full">
+        <img className="absolute w-60" src={LOGO_URL} alt="Logo" />
+      </div>
+      {/* <BodyLogin /> */}
+
+      <div className=" absolute flex items-center justify-center rounded-lg bg-black bg-opacity-75 p-16 shadow-lg">
+        <form>
+          <div className="mb-8 text-3xl font-bold text-white">Sign In</div>
+          <div className="mb-4">
+            <input
+              type="email"
+              placeholder="Enter Email Address"
+              id="email"
+              name="email"
+              className="w-full rounded border border-gray-300 px-3 py-2"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              type="password"
+              placeholder="Enter Password"
+              id="password"
+              name="password"
+              className="w-full rounded border border-gray-300 px-3 py-2"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="mt-8 w-full rounded bg-red-600 px-4 py-2 text-white hover:bg-blue-600"
+          >
+            Sign In
+          </button>
+          <div className="text-white">
+            <p>New to Netflix? Sign up now.</p>
+          </div>
+        </form>
+      </div>
+
+      {/* Footer */}
+      <footer className="absolute bottom-0 left-0 w-full bg-gray-900 bg-opacity-60 py-4 text-white">
+        <div className="container mx-auto mb-36 text-center">
+          <p>&copy; 2023 Your Company. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default Login;
