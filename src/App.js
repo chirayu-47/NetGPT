@@ -1,6 +1,8 @@
 import Login from "./Screens/Login";
 import Browse from "./Screens/Browse";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
+import appStore from "./Utils/appStore";
 
 const appRouter = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -9,9 +11,11 @@ const appRouter = createBrowserRouter([
 
 function App() {
   return (
-    <div>
-      <RouterProvider router={appRouter} />
-    </div>
+    <Provider store={appStore}>
+      <div>
+        <RouterProvider router={appRouter} />
+      </div>
+    </Provider>
   );
 }
 

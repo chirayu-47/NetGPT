@@ -1,23 +1,82 @@
-import React, { useState } from "react";
-import HeaderLogin from "../Components/HeaderLogin";
+import React, { useRef, useState } from "react";
+import Header from "../Components/Header";
 import { BG_URL } from "../Utils/constants";
+import { checkValidData } from "../Utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../Utils/firebase";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const handleButtonClick = () => {
+    const message = checkValidData(email.current.value, password.current.value);
+    setErrorMessage(message);
+    if (message) return;
+
+    if (!isSignInForm) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value,
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          // navigate("/browse");
+
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value,
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          // navigate("/browse");
+
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    }
+  };
 
   const toggleSignUpForm = () => {
     setIsSignInForm(!isSignInForm);
   };
   return (
     <div className="relative h-screen w-full">
-      <HeaderLogin />
+      <Header />
       <img
-        className="absolute w-full object-cover mix-blend-overlay brightness-50 "
+        className="absolute w-full object-cover brightness-50 "
+        // mix blend overlay
         src={BG_URL}
         alt="bgImg"
       />
       <div className="form relative flex h-screen items-center justify-center">
-        <form className="mx-auto w-full max-w-[400px] bg-black bg-opacity-80 p-14">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="mx-auto w-full max-w-[400px] bg-black bg-opacity-80 p-14"
+        >
           <h2 className="text-3xl font-bold text-white">
             {isSignInForm ? "Sign In" : "Sign Up"}
           </h2>
@@ -30,17 +89,23 @@ const Login = () => {
               />
             )}
             <input
+              ref={email}
               type="text"
               className="mb-3 w-full rounded-md bg-zinc-800 p-3 text-white"
               placeholder="Email or phone number"
             />
             <input
-              type="text"
+              ref={password}
+              type="password"
               className="w-full rounded-md bg-zinc-800 p-3 text-white"
               placeholder="Password"
             />
           </div>
-          <button className=" mt-5 w-full rounded-md bg-red-600 py-3 text-white">
+          <p className="text-red-500">{errorMessage}</p>
+          <button
+            className=" mt-5 w-full rounded-md bg-red-600 py-3 text-white"
+            onClick={handleButtonClick}
+          >
             {isSignInForm ? "Sign In" : "Sign Up"}
           </button>
           <div className="my-2 flex justify-between">
@@ -55,7 +120,7 @@ const Login = () => {
 
           {isSignInForm && (
             <div className="py-12">
-              <p className="mb-2 flex text-gray-400">
+              <h1 className="mb-2 flex text-gray-400">
                 New to Netflix?{" "}
                 <p
                   className="ml-1 cursor-pointer select-none text-white hover:underline"
@@ -63,12 +128,12 @@ const Login = () => {
                 >
                   Sign Up now.
                 </p>
-              </p>
+              </h1>
             </div>
           )}
           {!isSignInForm && (
             <div className="pb-12">
-              <p className="mb-2 flex text-gray-400">
+              <h1 className="mb-2 flex text-gray-400">
                 Already a user?{" "}
                 <p
                   className="ml-1 cursor-pointer select-none text-white hover:underline"
@@ -76,7 +141,7 @@ const Login = () => {
                 >
                   Sign In now.
                 </p>
-              </p>
+              </h1>
             </div>
           )}
         </form>
