@@ -39,8 +39,8 @@ const Header = () => {
   };
 
   return (
-    <div className="absolute z-10 flex w-full justify-between bg-gradient-to-b from-black px-3">
-      <img className="w-56 " src={LOGO_URL} alt="Logo" />
+    <div className="absolute z-10 flex w-full flex-col items-center justify-between bg-gradient-to-b from-black px-3 md:flex-row">
+      <img className="w-36 md:w-56 " src={LOGO_URL} alt="Logo" />
       {user && (
         <div className="flex items-center ">
           <button

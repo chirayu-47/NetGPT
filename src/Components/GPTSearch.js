@@ -7,7 +7,11 @@ const GPTSearch = () => {
   return (
     <div>
       <div className="fixed -z-10 brightness-75">
-        <img src={BG_URL} alt="GptBG" />
+        <img
+          className="h-screen object-cover md:w-screen"
+          src={BG_URL}
+          alt="GptBG"
+        />
       </div>
       <GPTSearchBar />
       <GPTMovieSuggestions />
