@@ -7,10 +7,15 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../Utils/firebase";
+import { Eye } from "lucide-react";
+import { useSelector } from "react-redux";
+import lang from "../Utils/languageConstants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const langKey = useSelector((store) => store.config.lang);
 
   const email = useRef(null);
   const password = useRef(null);
@@ -64,91 +69,100 @@ const Login = () => {
     setIsSignInForm(!isSignInForm);
   };
   return (
-    <div className="overflow-scroll">
+    <div className="">
       <Header />
       <div className="absolute">
         <img
-          className="h-screen object-cover brightness-50 md:w-screen "
+          className=" h-screen object-cover brightness-50 md:w-screen"
           // mix blend overlay
           src={BG_URL}
           alt="bgImg"
         />
       </div>
-      {/* <div className="form relative flex h-screen items-center justify-center"> */}
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        // className="mx-auto w-full max-w-[400px] bg-black bg-opacity-80 p-14"
-        className="fixed left-0 right-0 mx-auto my-36 w-full rounded-lg bg-black bg-opacity-80 p-12 text-white md:w-3/12"
-      >
-        <h2 className="text-3xl font-bold text-white">
-          {isSignInForm ? "Sign In" : "Sign Up"}
-        </h2>
-        <div className=" my-6">
-          {!isSignInForm && (
+      <div className="form relative flex h-screen items-center justify-center">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          // className="mx-auto w-full max-w-[400px] bg-black bg-opacity-80 p-14"
+          className="w-full rounded-lg bg-black bg-opacity-80 p-12 text-white md:w-3/12"
+        >
+          <h2 className="text-3xl font-bold text-white">
+            {isSignInForm ? (
+              <span>{lang[langKey].signIn}</span>
+            ) : (
+              <span>{lang[langKey].signUp}</span>
+            )}
+          </h2>
+          <div className=" my-6">
+            {!isSignInForm && (
+              <input
+                type="text"
+                className="mb-3 w-full rounded-md bg-zinc-800 p-3 text-white"
+                placeholder={lang[langKey].fullName}
+              />
+            )}
             <input
+              ref={email}
               type="text"
               className="mb-3 w-full rounded-md bg-zinc-800 p-3 text-white"
-              placeholder="Full Name"
+              placeholder={lang[langKey].email}
             />
-          )}
-          <input
-            ref={email}
-            type="text"
-            className="mb-3 w-full rounded-md bg-zinc-800 p-3 text-white"
-            placeholder="Email or phone number"
-          />
-          <input
-            ref={password}
-            type="password"
-            className="w-full rounded-md bg-zinc-800 p-3 text-white"
-            placeholder="Password"
-          />
-        </div>
-        <p className="text-red-500">{errorMessage}</p>
-        <button
-          className=" mt-5 w-full rounded-md bg-red-600 py-3 text-white"
-          onClick={handleButtonClick}
-        >
-          {isSignInForm ? "Sign In" : "Sign Up"}
-        </button>
-        <div className="my-2 flex justify-between">
-          <p className="text-gray-400">
-            <input type="checkbox" />
-            Remember Me
-          </p>
-          <p className="cursor-pointer text-gray-400 hover:underline">
-            Need Help ?
-          </p>
-        </div>
 
-        {isSignInForm && (
-          <div className="py-12">
-            <h1 className="mb-2 flex text-gray-400">
-              New to Netflix?{" "}
-              <p
-                className="ml-1 cursor-pointer select-none text-white hover:underline"
-                onClick={toggleSignUpForm}
-              >
-                Sign Up now.
-              </p>
-            </h1>
+            <input
+              ref={password}
+              type="password"
+              className="w-full rounded-md bg-zinc-800 p-3 text-white"
+              placeholder={lang[langKey].password}
+            />
           </div>
-        )}
-        {!isSignInForm && (
-          <div className="pb-12">
-            <h1 className="mb-2 flex text-gray-400">
-              Already a user?{" "}
-              <p
-                className="ml-1 cursor-pointer select-none text-white hover:underline"
-                onClick={toggleSignUpForm}
-              >
-                Sign In now.
-              </p>
-            </h1>
+          <p className="text-red-500">{errorMessage}</p>
+          <button
+            className=" mt-5 w-full rounded-md bg-red-600 py-3 text-white"
+            onClick={handleButtonClick}
+          >
+            {isSignInForm ? (
+              <span>{lang[langKey].signIn}</span>
+            ) : (
+              <span>{lang[langKey].signUp}</span>
+            )}
+          </button>
+          <div className="my-2 flex justify-between">
+            <p className="text-gray-400">
+              <input type="checkbox" />
+              {lang[langKey].remember}
+            </p>
+            <p className="cursor-pointer text-gray-400 hover:underline">
+              {lang[langKey].needHelp}
+            </p>
           </div>
-        )}
-      </form>
-      {/* </div> */}
+
+          {isSignInForm && (
+            <div className="py-12">
+              <h1 className="mb-2 flex text-gray-400">
+                {lang[langKey].newToNetflix}{" "}
+                <p
+                  className="ml-1 cursor-pointer select-none text-white hover:underline"
+                  onClick={toggleSignUpForm}
+                >
+                  {lang[langKey].signUpNow}
+                </p>
+              </h1>
+            </div>
+          )}
+          {!isSignInForm && (
+            <div className="pb-12">
+              <h1 className="mb-2 flex text-gray-400">
+                {lang[langKey].alreadyUser}{" "}
+                <p
+                  className="ml-1 cursor-pointer select-none text-white hover:underline"
+                  onClick={toggleSignUpForm}
+                >
+                  {lang[langKey].signInNow}
+                </p>
+              </h1>
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 };

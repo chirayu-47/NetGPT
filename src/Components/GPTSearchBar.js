@@ -1,11 +1,13 @@
 import React, { useRef } from "react";
 import openai from "../Utils/openAi";
 import { API_OPTIONS } from "../Utils/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addGptMovieResult } from "../Utils/gptSlice";
+import lang from "../Utils/languageConstants";
 
 const GPTSearchBar = () => {
   const searchText = useRef(null);
+  const langKey = useSelector((store) => store.config.lang);
   const dispatch = useDispatch();
   const searchMovieTMDB = async (movie) => {
     const data = await fetch(
@@ -45,7 +47,7 @@ const GPTSearchBar = () => {
   };
 
   return (
-    <div className="mb-5 flex justify-center pt-[30%] md:pt-[8%]">
+    <div className="mb-5 flex justify-center pt-[25%] md:pt-[8%]">
       <form
         className="mx-2 grid w-screen grid-cols-12 bg-black p-4 md:w-1/2 "
         onSubmit={(e) => e.preventDefault()}
@@ -53,14 +55,14 @@ const GPTSearchBar = () => {
         <input
           ref={searchText}
           type="text"
-          className="col-span-9 mr-3 rounded-sm p-3"
-          placeholder="What do you wanna watch today ?"
+          className="col-span-9 mr-3 rounded-sm p-3 text-sm md:text-base"
+          placeholder={lang[langKey].gptSearchPlaceHolder}
         ></input>
         <button
-          className="col-span-3 rounded-lg bg-red-600 px-4 py-2 font-semibold text-white"
+          className="col-span-3 rounded-lg bg-red-600 px-3 py-2 text-sm font-semibold text-white md:text-base"
           onClick={handleGptSearchClick}
         >
-          Search
+          {lang[langKey].search}
         </button>
       </form>
     </div>

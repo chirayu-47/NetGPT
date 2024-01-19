@@ -5,11 +5,13 @@ import MainContainer from "../Components/MainContainer";
 import SecondaryContainer from "../Components/SecondaryContainer";
 import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 import usePopularMovies from "../hooks/usePopularMovies";
+import useUpcomingMovies from "../hooks/useUpcomingMovies";
 
 const Browse = () => {
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   useNowPlayingMovies();
   usePopularMovies();
+  useUpcomingMovies();
 
   return (
     <div>
