@@ -1,6 +1,3 @@
-Certainly! Below is the updated README.md file with the project link added:
-
-```markdown
 # NetflixGPT - Enhancing Your Netflix Experience with GPT-3
 
 Welcome to NetflixGPT, a web application that utilizes the power of OpenAI's GPT-3 to elevate your Netflix game. This README.md file provides an overview of the project, technologies used, features, and instructions to get you started.
@@ -62,4 +59,3 @@ To run NetflixGPT locally, follow these steps:
 Visit [NetflixGPT](https://net-gpt.vercel.app/) to experience the app live.
 
 Enjoy NetflixGPT ! 🎉
-```
