@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../Utils/firebase";
-import { Eye } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useSelector } from "react-redux";
 import lang from "../Utils/languageConstants";
 
@@ -58,15 +58,20 @@ const Login = () => {
           // ...
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMessage(errorCode + "-" + errorMessage);
+          // const errorCode = error.code;
+          // const errorMessage = error.message;
+          setErrorMessage("Check Email/Password or Sign Up");
         });
     }
   };
 
   const toggleSignUpForm = () => {
     setIsSignInForm(!isSignInForm);
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
   return (
     <div className="">
@@ -107,12 +112,33 @@ const Login = () => {
               placeholder={lang[langKey].email}
             />
 
-            <input
-              ref={password}
-              type="password"
-              className="w-full rounded-md bg-zinc-800 p-3 text-white"
-              placeholder={lang[langKey].password}
-            />
+            <div className="relative flex items-center">
+              <input
+                ref={password}
+                type={showPassword ? "text" : "password"}
+                className="relative w-full select-none rounded-md bg-zinc-800 p-3 text-white"
+                placeholder={
+                  isSignInForm
+                    ? lang[langKey].password
+                    : lang[langKey].createPwd
+                }
+              />
+              {showPassword ? (
+                <Eye
+                  color="#545454"
+                  className="absolute left-64 right-0 cursor-pointer select-none"
+                  onClick={togglePasswordVisibility}
+                  size={20}
+                />
+              ) : (
+                <EyeOff
+                  size={20}
+                  color="#545454"
+                  className="absolute left-64 right-0 cursor-pointer select-none"
+                  onClick={togglePasswordVisibility}
+                />
+              )}
+            </div>
           </div>
           <p className="text-red-500">{errorMessage}</p>
           <button
