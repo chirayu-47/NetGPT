@@ -58,8 +58,8 @@ const Login = () => {
           // ...
         })
         .catch((error) => {
-          // const errorCode = error.code;
-          // const errorMessage = error.message;
+          const errorCode = error.code;
+          const errorMessage = error.message;
           setErrorMessage("Check Email/Password or Sign Up");
         });
     }
@@ -112,7 +112,7 @@ const Login = () => {
               placeholder={lang[langKey].email}
             />
 
-            <div className="relative flex items-center">
+            <div className="relative flex items-center justify-end">
               <input
                 ref={password}
                 type={showPassword ? "text" : "password"}
@@ -126,7 +126,7 @@ const Login = () => {
               {showPassword ? (
                 <Eye
                   color="#545454"
-                  className="absolute left-64 right-0 cursor-pointer select-none"
+                  className="absolute right-0 mr-3 cursor-pointer select-none"
                   onClick={togglePasswordVisibility}
                   size={20}
                 />
@@ -134,7 +134,7 @@ const Login = () => {
                 <EyeOff
                   size={20}
                   color="#545454"
-                  className="absolute left-64 right-0 cursor-pointer select-none"
+                  className="absolute right-0 mr-3 cursor-pointer select-none"
                   onClick={togglePasswordVisibility}
                 />
               )}
